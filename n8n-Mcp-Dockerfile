@@ -1,0 +1,18 @@
+# Dockerfile personalizado para n8n con nodo MCP
+FROM n8nio/n8n:1.84.3
+
+# Crear carpeta para extensiones personalizadas
+RUN mkdir -p /data/custom
+
+# Copiar el nodo MCP ya compilado (esto se sustituye al subir el repo con la carpeta)
+COPY ./n8n-nodes-mcp /data/custom/node_modules/n8n-nodes-mcp
+
+# Establecer variables de entorno para n8n
+ENV N8N_CUSTOM_EXTENSIONS=/data/custom \
+    NOTION_API_TOKEN=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 \
+    N8N_EDITOR_BASE_URL=http://localhost:5678 \
+    N8N_HOST=0.0.0.0 \
+    N8N_PORT=5678
+
+# Exponer el puerto
+EXPOSE 5678
